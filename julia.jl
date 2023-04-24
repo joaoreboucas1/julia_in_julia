@@ -1,3 +1,4 @@
+using DelimitedFiles
 using Plots
 using Colors
 
@@ -22,7 +23,6 @@ catch Exception
 end
 
 println("Making visualization of $which_set")
-
 
 delta_x = (XMAX - XMIN)/N
 delta_y = (YMAX - YMIN)/N
@@ -55,6 +55,11 @@ for i = 1:N, j = 1:N
     color[j,i] = (which_set=="mandelbrot") ? is_in_mandelbrot(z) : is_in_julia(z,c)
 end
 println("Checked complex numbers. Saving plot...")
+if true
+    writedlm(OUT_NAME, color, ",")
+    println("Saved data in $OUT_NAME")
+    exit(0)
+end
 heatmap(color, color=:greys)
 savefig(OUT_NAME)
 println("Saved visualization in $OUT_NAME")
