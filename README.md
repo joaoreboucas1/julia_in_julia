@@ -1,5 +1,5 @@
 # Julia in Julia
-(WIP) A simple visual representation of the Mandelbrot and Julia sets.
+A simple visual representation of the Mandelbrot and Julia sets.
 
 ## Usage
 `$ julia julia.jl set n iter xmin xmax ymin ymax out_file`
