@@ -1,5 +1,4 @@
-using DelimitedFiles
-using Plots
+using Images
 using Colors
 
 # Parse command-line options
@@ -21,8 +20,8 @@ catch Exception
     println("    out_name: name of output file")
     exit(1)
 end
-
-println("Making visualization of $which_set")
+set_name = uppercase(first(which_set)) * last(which_set, length(which_set)-1)
+println("Making visualization of $set_name set")
 
 delta_x = (XMAX - XMIN)/N
 delta_y = (YMAX - YMIN)/N
@@ -55,11 +54,7 @@ for i = 1:N, j = 1:N
     color[j,i] = (which_set=="mandelbrot") ? is_in_mandelbrot(z) : is_in_julia(z,c)
 end
 println("Checked complex numbers. Saving plot...")
-if true
-    writedlm(OUT_NAME, color, ",")
-    println("Saved data in $OUT_NAME")
-    exit(0)
-end
-heatmap(color, color=:greys)
-savefig(OUT_NAME)
-println("Saved visualization in $OUT_NAME")
+image = Gray{N0f8}.((color .% MAX_ITERATIONS) ./ 255)
+println("Saved data in $OUT_NAME")
+save(OUT_NAME, image)
+exit(0)
